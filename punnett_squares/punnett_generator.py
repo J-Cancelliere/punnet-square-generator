@@ -30,6 +30,8 @@ def punnett_multi (mother:list, father:list):
     f_alleles = ''.join(father)
     # Generate tuples containing each gene pair for both parents
     m_combinations = []
+    # TODO: There is a bug here with the pair list generation. Needs to be
+    # investigated.
     for it in itertools.pairwise(m_alleles):
         m_combinations.append(it)
     m_combinations = m_combinations[::2]

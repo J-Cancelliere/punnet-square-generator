@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+import itertools
 from gene_creation import get_genes, determine_dominance
 from punnett import Punnett
 
@@ -23,13 +24,49 @@ def punnett_2x2 (mother:str, father:str):
     punnett_df = pd.DataFrame(punnett_array, columns=mother_alleles, index=father_alleles)
     return(punnett_df)
 
+def combine_alleles(parent_genes:list):
+    allele_list = []
+    if len(parent_genes) == 3:
+        for a in parent_genes[0]:
+            allele_list.append(a + parent_genes[1][0] + parent_genes[2][0])
+            allele_list.append(a + parent_genes[1][0] + parent_genes[2][1])
+            allele_list.append(a + parent_genes[1][1] + parent_genes[2][0])
+            allele_list.append(a + parent_genes[1][1] + parent_genes[2][1])
+    else:
+        for a in parent_genes[0]:
+            allele_list.append(a + parent_genes[1][0])
+            allele_list.append(a + parent_genes[1][0])
+    return(allele_list)
+
 def punnett_multi (mother:list, father:list):
     # TODO: build out function to create a full punnett square (e.g. 4x4, 9x9,
     # etc) using the individual Punnetts.
-    punnett_list = []
-    for i,pair in enumerate(mother):
-        punnett_list.append(punnett_2x2(pair,father[i]))
-    return(punnett_list)
+    m_alleles = ''.join(mother)
+    f_alleles = ''.join(father)
+    # Generate tuples containing each gene pair for both parents
+    m_combinations = []
+    for it in itertools.pairwise(m_alleles):
+        m_combinations.append(it)
+    m_combinations = m_combinations[::2]
+    f_combinations = []
+    for it in itertools.pairwise(f_alleles):
+        f_combinations.append(it)
+    f_combinations = f_combinations[::2]
+    # Create all the allele combinations for each parent
+    m_alleles = combine_alleles(m_combinations)
+    f_alleles = combine_alleles(f_combinations)
+    # Create a list of all possible gene combinations
+    gene_combinations = []
+    for m_allele in m_alleles:
+        for f_allele in f_alleles:
+            gene_combinations.append(m_allele + f_allele)
+    # Convert combination list into an array, reshape, and return a DataFrame
+    if len(gene_combinations) > 16:
+        gene_array = np.array(gene_combinations).reshape(8,8)
+    else:
+        gene_array = np.array(gene_combinations).reshape(4,4)
+    gene_df = pd.DataFrame(gene_array, columns=m_alleles, index=f_alleles)
+    return gene_df
 
 def main():
     n_genes, pairs = get_genes()

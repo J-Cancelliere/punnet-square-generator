@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 import itertools
 from gene_creation import get_genes, determine_dominance
+from utils import combine_alleles, fix_combination_order
 from punnett import Punnett
 
 def punnett_2x2 (mother:str, father:str):
@@ -24,23 +25,7 @@ def punnett_2x2 (mother:str, father:str):
     punnett_df = pd.DataFrame(punnett_array, columns=mother_alleles, index=father_alleles)
     return(punnett_df)
 
-def combine_alleles(parent_genes:list):
-    allele_list = []
-    if len(parent_genes) == 3:
-        for a in parent_genes[0]:
-            allele_list.append(a + parent_genes[1][0] + parent_genes[2][0])
-            allele_list.append(a + parent_genes[1][0] + parent_genes[2][1])
-            allele_list.append(a + parent_genes[1][1] + parent_genes[2][0])
-            allele_list.append(a + parent_genes[1][1] + parent_genes[2][1])
-    else:
-        for a in parent_genes[0]:
-            allele_list.append(a + parent_genes[1][0])
-            allele_list.append(a + parent_genes[1][0])
-    return(allele_list)
-
 def punnett_multi (mother:list, father:list):
-    # TODO: build out function to create a full punnett square (e.g. 4x4, 9x9,
-    # etc) using the individual Punnetts.
     m_alleles = ''.join(mother)
     f_alleles = ''.join(father)
     # Generate tuples containing each gene pair for both parents
@@ -66,6 +51,7 @@ def punnett_multi (mother:list, father:list):
     else:
         gene_array = np.array(gene_combinations).reshape(4,4)
     gene_df = pd.DataFrame(gene_array, columns=m_alleles, index=f_alleles)
+    gene_df = gene_df.map(fix_combination_order)
     return gene_df
 
 def main():

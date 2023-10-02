@@ -1,8 +1,10 @@
 # Punnett Square Generation
 _What is a Punnett Square?_ A Punnett Square is a diagram composed of a grid of usually four boxes and is used to calculate and depict all the combinations and frequencies of the different genotypes and phenotypes among the offspring of a cross in accordance with Mendelian inheritance.
 
-![A 2 by 2 Punnett square](https://github.com/J-Cancelliere/punnett-square-generator/blob/readme-updates/images/example_square1.jpg)
-![A 4 by 4 Punnett square](https://github.com/J-Cancelliere/punnett-square-generator/blob/readme-updates/images/example_square2.jpg)
+<img src="https://github.com/J-Cancelliere/punnett-square-generator/blob/readme-updates/images/example_square1.jpg" alt="drawing" style="width:200px;"/>
+
+<img src="https://github.com/J-Cancelliere/punnett-square-generator/blob/readme-updates/images/example_square2.jpg" alt="drawing" style="width:200px;"/>
+
 
 ## Current progress
 Current progress allows for the scripts in this repo to generate a basic 4x4 punnet square. The final goal would be to have a full UI and app that can be used to create and save multiple squares.

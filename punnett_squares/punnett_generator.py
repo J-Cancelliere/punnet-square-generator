@@ -24,12 +24,12 @@ def punnett_2x2 (mother:str, father:str):
     return(punnett_df)
 
 def punnett_multi (mother:list, father:list):
+    # TODO: build out function to create a full punnett square (e.g. 4x4, 9x9,
+    # etc) using the individual Punnetts.
     punnett_list = []
     for i,pair in enumerate(mother):
         punnett_list.append(punnett_2x2(pair,father[i]))
-    print(np.concatenate(punnett_list[0],punnett_list[i]))
-    # punnett_array = np.array([combinations[:2],combinations[2:]])
-    # punnett_df = pd.DataFrame(punnett_array, columns=mother_alleles, index=father_alleles)
+    return(punnett_list)
 
 def main():
     n_genes, pairs = get_genes()

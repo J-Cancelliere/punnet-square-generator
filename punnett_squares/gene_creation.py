@@ -1,5 +1,6 @@
 # CLI functions for getting all details to instantiate a Punnett object
 
+# TODO: Determine if this function is still needed after implementing streamlit UI
 def get_genes():
     n_genes = int(input("How many gene pairs?"))
     assert n_genes > 0 and n_genes < 4, "Input must be greater than 0 and less than 4"
@@ -10,19 +11,23 @@ def get_genes():
         gene_pairs.append(pair)
     return (n_genes, gene_pairs)
 
-def determine_dominance(pairs:list):
-    parents_dict = {"mother":[], "father":[]}
-    for parent in parents_dict.keys(): # Always run twice for both gene sets
-        for pair in pairs:
-            print("[1] Homozygous donimant\n[2] Heterozygous\n[3] Homozygous recessive")
-            dominance = int(input(f"Select an option above for {parent} gene {pair}:"))
-            if dominance == 1:
-                gene_pair = pair.upper() + pair.upper()
-            if dominance == 2:
-                gene_pair = pair.upper() + pair.lower()
-            if dominance == 3:
-                gene_pair = pair.lower() + pair.lower()
-            parents_dict[parent].append(gene_pair)
+def determine_dominance(dominance:dict):
+    parents_dict = {"parent1":[], "parent2":[]}
+    for gene in dominance.keys():
+        if dominance[gene][0] == "Homozygous Dominant":
+            gene_pair = gene.upper() + gene.upper()
+        elif dominance[gene][0] == "Heterozygous":
+            gene_pair = gene.upper() + gene.lower()
+        else:
+            gene_pair = gene.lower() + gene.lower()
+        parents_dict["parent1"].append(gene_pair)
+        # if dominance[gene][1] == "Homozygous Dominant":
+        #     gene_pair = gene.upper() + gene.upper()
+        # elif dominance[gene][1] == "Heterozygous":
+        #     gene_pair = gene.upper() + gene.lower()
+        # else:
+        #     gene_pair = gene.lower() + gene.lower()
+        # parents_dict["parent2"].append(gene_pair)
     return parents_dict
 
 if __name__ == "__main__":

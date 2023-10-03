@@ -1,9 +1,9 @@
 import numpy as np
 import pandas as pd
 import itertools
-from gene_creation import get_genes, determine_dominance
-from utils import combine_alleles, fix_combination_order
-from punnett import Punnett
+# from gene_creation import get_genes, determine_dominance
+# from utils import combine_alleles, fix_combination_order
+# from punnett import Punnett
 
 def punnett_2x2 (mother:str, father:str):
     base_allele = mother[0].lower()
